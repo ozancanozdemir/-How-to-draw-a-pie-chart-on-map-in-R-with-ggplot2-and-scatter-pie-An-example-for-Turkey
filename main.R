@@ -74,6 +74,11 @@ head(tr_data)
 st_data_turkey <- st_read("https://geodata.ucdavis.edu/gadm/gadm4.1/json/gadm41_TUR_1.json")
 head(st_data_turkey)
 
+# Ensure both the map and pie chart coordinates use the same CRS
+# The coordinates in tr_data are in WGS84 (EPSG:4326)
+# Transform st_data_turkey to WGS84 to ensure proper alignment
+st_data_turkey <- st_transform(st_data_turkey, crs = 4326)
+
 ggplot(data = st_data_turkey) +
   geom_sf() +
   geom_scatterpie(aes(x = long, y = lat),
